@@ -1,0 +1,20 @@
+[project]
+name = "manualmind"
+version = "0.1.0"
+description = "AI-powered document search and query system for user manuals with natural language processing capabilities"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.116.1",
+    "uvicorn>=0.35.0",
+    "openai>=1.0.0",
+    "redis>=5.0.0",
+    "PyPDF2>=3.0.0",
+    "pycryptodome>=3.19.0",
+    "python-multipart>=0.0.6",
+    "slowapi>=0.1.9",
+    "sentence-transformers>=2.2.0",
+    "numpy>=1.24.0",
+    "python-dotenv>=1.0.0",
+    "jinja2>=3.1.0",
+    "aiofiles>=23.0.0",
+]
