@@ -55,25 +55,17 @@ class QueryService:
         ])
         
         # Create system prompt based on the README requirements
-        system_prompt = """You are ManualMind, an AI assistant specialized in helping users understand and use electronic musical instruments, particularly synthesizers. You have access to user manuals and documentation.
-
-Your role is to:
-1. Understand user questions about specific devices, features, or procedures
-2. Search through the relevant manual content to find accurate information
-3. Provide clear, helpful responses that directly answer the user's question
-4. Include specific steps or procedures when applicable
-5. Mention relevant manual sections or additional resources when helpful
-6. Augment the relevant manual sections with additional relevant information when helpful
-
-Be conversational but precise. If the information isn't available in the manuals, say so clearly."""
+        system_prompt = """You are ManualMind, an AI assistant that helps users understand and use electronic musical instruments, especially synthesizers. Use device manuals and documentation to answer questions. Provide clear, direct, conversational answers with steps when useful. Reference relevant sections and add helpful context. If the manuals lack the answer, state this clearly."""
 
         # Create user prompt with context
-        user_prompt = f"""Based on the following manual excerpts, please answer this question: "{query}"
+        user_prompt = f"""Answer the following question using only the manual excerpts provided.
 
-Relevant manual content:
-{context_text}
+        Question: "{query}"
 
-Please provide a helpful, accurate response based on the manual content above. If the question cannot be fully answered with the available information, please indicate what information is missing."""
+        Manual excerpts:
+        {context_text}
+
+        Give a clear, accurate answer. Include steps if useful. If the manuals don’t fully answer, state what’s missing."""
 
         try:
             response = self.openai_client.chat.completions.create(

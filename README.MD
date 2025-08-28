@@ -139,7 +139,7 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 curl -X POST "http://localhost:8000/query" \
      -H "Content-Type: application/json" \
      -d '{
-       "question": "How do I enable the vocoder on my Roland Juno X?",
+       "question": "How do I use the vocoder on my Roland Juno X?",
        "max_results": 5
      }'
 ```
@@ -239,16 +239,28 @@ docker-compose logs -f redis
 
 ## ❓ Example Usage
 
-**User Question**: "How do I enable the vocoder for any patch on my Roland Juno X?"
+**User Question**: "How do I use the vocoder on my Roland Juno X?"
 
-**System Response**: Based on the Roland Juno X manual, to enable the vocoder feature on any patch, you need to:
+**System Response**: To use the vocoder on your Roland Juno X, follow these steps:
 
-1. Access the Vocoder section in the Performance mode
-2. Set the Vocoder switch to ON
-3. Configure the vocoder parameters as needed
-4. The vocoder will now process your vocal input along with the selected patch
+1. Connect a microphone to the rear panel MIC IN jack on the Juno X. Use a dynamic microphone or an electret condenser microphone (plug-in power system) as condenser microphones are not supported.
+2. Adjust the volume of the microphone input using the rear panel MIC IN GAIN knob. Start by setting the knob to the center position and make detailed adjustments after selecting the sound.
+3. Select part 1 on the Juno X and press the MODEL BANK button to illuminate it.
+4. Press the MODEL BANK button and then press button 6. By default, the "VOCODER" is assigned to the model bank of button 6. You can change the assigned model bank if needed.
+5. Use the [- VALUE +] knob to select a vocoder sound from the two types available.
+6. While playing the keyboard, vocalize into the microphone. The vocoder effect will be applied to your voice.
 
-*Sources: JUNO-X_VocalDesigner_eng02_W.pdf, JUNO-X_Editor_eng01_W.pdf*
+If you want to input audio playback from your computer instead of using the microphone input for the vocoder:
+1. Connect the Juno X to your computer via USB.
+2. Choose "OUT MIC" as the audio output device of your computer. This way, the audio playback from your computer can be used for the vocoder performance.
+
+For further details on setting up the USB driver and audio settings, refer to the sections in the manual related to USB audio settings and driver installation.
+
+Confidence: MEDIUM
+
+Sources (5)
+
+JUNO-X_Reference_eng01_W.pdf
 
 ## 🤝 Contributing
 
