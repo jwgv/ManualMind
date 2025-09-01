@@ -1,0 +1,19 @@
+[project]
+name = "manualmind-mcp-server"
+version = "0.1.0"
+description = "Model Context Protocol server for ManualMind API integration"
+requires-python = ">=3.12"
+dependencies = [
+    "mcp>=1.0.0",
+    "httpx>=0.27.0",
+    "python-dotenv>=1.0.0",
+    "fastapi>=0.116.1",
+    "uvicorn>=0.35.0",
+]
+
+[project.scripts]
+manualmind-mcp = "main:main"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"

@@ -15,6 +15,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - manualmind-network
 
   manualmind:
     build: .
@@ -43,8 +45,43 @@ services:
       timeout: 10s
       retries: 3
       start_period: 10s
+    networks:
+      - manualmind-network
 
-  # Optional: Nginx reverse proxy for production
+  # MCP Server for external API access
+  mcp-server:
+    build: 
+      context: ./mcp_server
+      dockerfile: Dockerfile
+    container_name: manualmind-mcp-server
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    environment:
+      - MANUALMIND_API_URL=${MANUALMIND_API_URL:-http://manualmind:8000}
+      - API_TIMEOUT=${API_TIMEOUT:-30}
+      - RATE_LIMIT_PER_MINUTE=${RATE_LIMIT_PER_MINUTE:-10}
+      - MAX_RETRIES=${MAX_RETRIES:-3}
+      - PYTHONUNBUFFERED=${PYTHONUNBUFFERED:-1}
+      - MCP_RUN_MODE=http
+      - MCP_HTTP_PORT=8001
+    env_file:
+      - .env
+    volumes:
+      - mcp_logs:/app/logs
+    depends_on:
+      manualmind:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - manualmind-network
+
+  # Nginx reverse proxy for production
   nginx:
     image: nginx:alpine
     container_name: manualmind-nginx
@@ -57,13 +94,18 @@ services:
       - ./static:/var/www/static:ro
     depends_on:
       - manualmind
+      - mcp-server
     profiles:
       - production
+    networks:
+      - manualmind-network
 
 volumes:
   redis_data:
     driver: local
+  mcp_logs:
+    driver: local
 
 networks:
-  default:
-    name: manualmind-network
+  manualmind-network:
+    driver: bridge
