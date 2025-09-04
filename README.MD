@@ -15,6 +15,7 @@ ManualMind is an intelligent document assistant that helps users find answers to
 - **Rate Limiting**: API rate limiting to prevent abuse
 - **Docker Deployment**: Complete containerization with Docker Compose
 - **Health Monitoring**: Built-in health checks and status monitoring
+- **MCP Server Integration**: Model Context Protocol server for Claude Desktop and other MCP-compatible clients
 
 ## 🚀 Quick Start
 
@@ -80,6 +81,50 @@ Use the automated deployment script:
 - **Web Interface**: http://localhost:8000
 - **API Documentation**: http://localhost:8000/docs
 - **Health Check**: http://localhost:8000/health
+
+## 🤖 MCP Server Integration
+
+ManualMind includes a Model Context Protocol (MCP) server that enables Claude Desktop and other MCP-compatible clients to query your document database using natural language.
+
+### MCP Setup
+
+For detailed MCP server configuration, see the [MCP Setup Guide](MCP_SETUP.md).
+
+#### Quick MCP Configuration
+
+1. **Ensure ManualMind is running**:
+   ```bash
+   ./scripts/deploy.sh start
+   ```
+
+2. **Add to Claude Desktop config** (`claude_desktop_config.json`):
+   ```json
+   {
+     "mcpServers": {
+       "manualmind-http": {
+         "command": "bash",
+         "args": ["/path/to/ManualMind/scripts/mcp_client_stdio.sh"],
+         "env": {
+           "MCP_SERVER_HOST": "localhost",
+           "MCP_SERVER_PORT": "8001",
+           "MANUALMIND_API_KEY": "your_api_key_here"
+         }
+       }
+     }
+   }
+   ```
+
+3. **Update the path** to match your ManualMind installation
+
+4. **Restart Claude Desktop**
+
+#### Available MCP Tools
+
+- **query_manuals**: Search manuals using natural language
+- **get_system_status**: Check system health and available documents  
+- **process_documents**: Trigger document processing
+
+For complete setup instructions, configuration options, and troubleshooting, see the [MCP Setup Guide](MCP_SETUP.md).
 
 ## 🏗️ Architecture
 

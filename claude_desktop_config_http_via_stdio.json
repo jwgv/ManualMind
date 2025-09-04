@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "manualmind-http": {
+      "command": "bash",
+      "args": [
+        "/path/to/ManualMind/scripts/mcp_client_stdio.sh"
+      ],
+      "env": {
+        "MCP_SERVER_HOST": "localhost",
+        "MCP_SERVER_PORT": "8001",
+        "MANUALMIND_API_KEY": "--PUT-KEY-HERE--"
+      }
+    }
+  }
+}
